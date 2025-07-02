@@ -1,0 +1,56 @@
+{
+    "name": "s3-cloudfront-static-hosting",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "remoteUser": "vscode",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/aws-cli:1": {
+            // see https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst
+            "version": "2.27.46"
+        },
+        "ghcr.io/devcontainers/features/terraform:1": {
+            "version": "1.12"
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "24.3"
+        },
+    },
+    "mounts": [
+        "source=${localEnv:USERPROFILE}/.aws/,target=/home/vscode/.aws/,type=bind,consistency=cached"
+    ],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.formatOnSave": true,
+                "github.copilot.chat.commitMessageGeneration.instructions": [
+                    {
+                        "text": "必ず日本語で記述してください"
+                    },
+                    {
+                        "text": "コミットメッセージは、最初にConventional Commitsに則って記述してください"
+                    },
+                    {
+                        "text": "その後ファイルごとの詳細な変更内容を記述してください"
+                    }
+                ],
+            },
+            "extensions": [
+                "donjayamanne.githistory",
+                "mhutchie.git-graph",
+                "oderwat.indent-rainbow",
+                "bierner.markdown-mermaid",
+                "github.vscode-github-actions",
+                "github.vscode-pull-request-github",
+            ]
+        }
+    },
+    "runArgs": [],
+    "containerEnv": {
+        "WORKSPACE_NAME": "${containerWorkspaceFolderBasename}"
+    },
+    // コンテナ作成直後に MCP CLI をグローバルインストール
+    "postCreateCommand": "bash ./.devcontainer/post-create.sh"
+}

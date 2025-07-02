@@ -1,6 +1,6 @@
 # Static Website Infrastructure – Terraform
 
-このディレクトリでは、静的コンテンツを **S3 + CloudFront + Route 53** で配信し、Terraform のステートを **S3 ロックファイル** で管理するコードを提供します。
+本ディレクトリには、 **S3 + CloudFront + Route 53** で静的コンテンツを配信し、Terraform のステートを S3 バックエンドで管理、さらに S3 ネイティブのロックファイル（.tflock）で排他制御を行うためのコードが収められています。
 
 ---
 
@@ -25,13 +25,14 @@ infra/aws/
 
 ## 変数
 
-| 変数名            | デフォルト                        | 説明                           |
-| ----------------- | -------------------------------- | ------------------------------ |
-| `region`          | `ap-northeast-1`                 | プライマリリージョン           |
-| `domain_name`     | `dummy.com`                      | CloudFront が配信する FQDN     |
-| `hosted_zone_id`  | `DUMMYIDXXXXXXXXXXXXXX`          | 既存 Route 53 ホストゾーン ID  |
+| 変数名            | デフォルト                       | ファイル            | 説明                           |
+| ----------------- | ------------------------------- | ------------------ | ------------------------------ |
+| `project_prefix`  | `s3-cloudfront-static-hosting`  | `provider.tf`      | プロジェクト名                 |
+| `region`          | `ap-northeast-1`                | `terraform.tfvars` | プライマリリージョン           |
+| `domain_name`     | `dummy.com`                     | `terraform.tfvars` | CloudFront が配信する FQDN     |
+| `hosted_zone_id`  | `DUMMYIDXXXXXXXXXXXXXX`         | `terraform.tfvars` | 既存 Route 53 ホストゾーン ID  |
 
-必要に応じて `terraform.tfvars` で上書きしてください。
+必要に応じて `provider.tf`、`terraform.tfvars` で上書きしてください。
 
 ---
 
@@ -139,7 +140,7 @@ jobs:
 
 - CloudFront 価格クラス: `PriceClass_All`（必要に応じて変更）  
 - Viewer Certificate: TLS 1.2_2021, SNI-only  
-- バケットは **バージョニング + SSE** を有効化  
+- バケットは **バージョニング** を有効化  
 - tfstate バケットは `prevent_destroy = true` で誤削除防止
 
 以上でセットアップ完了です。Happy Terraforming!

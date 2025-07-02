@@ -1,0 +1,16 @@
+# Local state
+*.tfstate
+*.tfstate.backup
+
+# Crash logs
+crash.log
+
+# Terraform working directory
+.terraform/
+
+# Terragrunt
+.terragrunt-cache/
+
+# Sensitive files
+*.tfvars
+*.tfvars.json

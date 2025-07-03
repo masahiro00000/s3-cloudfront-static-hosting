@@ -10,7 +10,8 @@
 
 # terraform {
 #   backend "s3" {
-#     bucket = local.tfstate_bucket_name
+#     # バケット名は backend_setup.tf で作成される local.tfstate_bucket_name に合わせる
+#     bucket = "terraform-state-s3-cloudfront-static-hosting"
 #     key    = "aws/terraform.tfstate"
 #     region = "ap-northeast-1"
 #     encrypt      = true

@@ -18,7 +18,7 @@
         },
     },
     "mounts": [
-        "source=${localEnv:USERPROFILE}/.aws/,target=/home/vscode/.aws/,type=bind,consistency=cached"
+        "type=bind,source=${localEnv:USERPROFILE}/.aws/,target=/home/vscode/.aws/,consistency=cached"
     ],
     "customizations": {
         "vscode": {
